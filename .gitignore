@@ -1,0 +1,45 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment and deployment-related files
+env/
+venv/
+.vscode/
+.env
+*.flaskenv
+*.env.*
+
+# Local development server PID file
+*.pid
+
+# Logs
+*.log
+
+# Database
+db.sqlite3
+
+# Compiled Python files
+*.pyc
+
+# Dependencies
+# Use a requirements.txt file to list them
+# If you are using pipenv, include the Pipfile.lock file instead
+# For poetry, include the poetry.lock file instead
+# requirements.txt
+# Pipfile.lock
+# poetry.lock
+
+# Ignore OS-generated files
+.DS_Store
+Thumbs.db
+
+# Ignore any sensitive or confidential files
+# For example, API keys, credentials, etc.
+secret_file.txt
+
+# Ignore IDE specific files
+# For example, Visual Studio Code settings
+.vs/
+*.code-workspace
