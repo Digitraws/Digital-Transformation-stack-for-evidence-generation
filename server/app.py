@@ -46,6 +46,7 @@ def get_evidence():
         response = requests.get(url)
         response.raise_for_status()  # Raise an exception for 4xx and 5xx status codes
         content = response.content
+        print(type(content))
 
         signature = PRIVATE_KEY.sign(
             content,
@@ -56,7 +57,9 @@ def get_evidence():
             hashes.SHA256()
         )
 
-        return signature
+        print(signature)
+        print("h",type(signature.hex()))
+        return signature.hex()
 
     except Exception as e:
         return f"Error: {str(e)}"

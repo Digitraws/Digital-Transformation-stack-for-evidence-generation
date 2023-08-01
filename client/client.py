@@ -1,20 +1,19 @@
 import requests
 import hashlib
+import binascii
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives.serialization import load_pem_public_key
 from cryptography.hazmat.backends import default_backend
 
-def verify(signature, content, public_key):
-    # Calculate the SHA-1 hash of the content
-    content_hash = hashlib.sha1(content).digest()
-
+def verify(signature_hex, content, public_key_pem):
     # Verify the signature using the provided public key
-    public_key_obj = load_pem_public_key(public_key, backend=default_backend())
     try:
+        public_key_obj = load_pem_public_key(public_key_pem, backend=default_backend())
+        signature = bytes.fromhex(signature_hex)
         public_key_obj.verify(
             signature,
-            content_hash,
+            content,
             padding.PSS(
                 mgf=padding.MGF1(hashes.SHA256()),
                 salt_length=padding.PSS.MAX_LENGTH
@@ -26,7 +25,6 @@ def verify(signature, content, public_key):
         return False
 
 def main():
-    # Replace 'http://yourdomain.com' with the actual base URL of your Flask app
     base_url = 'http://localhost:5000'
 
     # Get the public key from the server
@@ -39,8 +37,8 @@ def main():
 
     # Get the signature from the server
     response = requests.get(f"{base_url}/evidence?=endpoint=/")
-    signature = response.content
-    print(content, signature)
+    signature = response.content.decode('utf-8')
+    print(content, signature, sep='\n')
 
     # Verify the signature with the public key
     result = verify(signature, content, pub_key_pem)
