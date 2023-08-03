@@ -36,7 +36,7 @@ def main():
     content = response.content
 
     # Get the signature from the server
-    response = requests.get(f"{base_url}/evidence?=endpoint=/")
+    response = requests.get(f"{base_url}/evidence", params={"endpoint": "/"})
     signature = response.content.decode('utf-8')
     print(content, signature, sep='\n')
 
