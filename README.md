@@ -20,3 +20,16 @@ Need to check how the browser does it.
 1. For our evidence to be robust enough, we must store at least the properties (content+timestamp+URL/link (HTTP response), signature).
 2. The timestamps of all the objects in a particular evidence must be within a certain timeframe (T secs).
     1. There could be corner cases where the evidence is not truly correct, but the probability of that happening is very unlikely.
+
+## To-Do List 
+- [ ] Create a static HTML page and fetch evidence that contains static
+  - [x] Images
+  - [ ] Videos
+  - [ ] Audio
+- [ ] Reconstruct a viewable evidence from the serialzed version
+- [ ] Save the `evidence/` as a compressed file
+- [ ] Server side stuff
+    - [ ] sign `content` + `public_key`
+    - [ ] Add custom headers to the server
+    - [ ] create multliple servers with this property
+- [ ] Create a function to verify the signatures

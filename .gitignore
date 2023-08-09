@@ -43,3 +43,8 @@ secret_file.txt
 # For example, Visual Studio Code settings
 .vs/
 *.code-workspace
+
+
+# custom
+evidence/
+tp.py
