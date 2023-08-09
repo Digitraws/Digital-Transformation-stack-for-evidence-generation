@@ -25,8 +25,8 @@ Need to check how the browser does it.
 - [ ] Create a static HTML page and fetch evidence that contains static
   - [x] Images
   - [ ] Videos
-  - [ ] Audio
-- [ ] Reconstruct a viewable evidence from the serialzed version
+  - [x] Audio
+- [x] Reconstruct a viewable evidence from the serialzed version
 - [ ] Save the `evidence/` as a compressed file
 - [ ] Server side stuff
     - [ ] sign `content` + `public_key`
