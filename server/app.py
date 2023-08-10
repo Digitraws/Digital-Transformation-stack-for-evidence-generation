@@ -29,14 +29,19 @@ PUBLIC_KEY_PEM = PUBLIC_KEY.public_bytes(
 
 @app.route('/')
 def index():
+    #Renders the index.html template for the root route.
     return render_template('index.html')
 
 @app.route('/publickey')
 def get_public_key():
+    #Returns the serialized public key in PEM format.
     return PUBLIC_KEY_PEM
 
 @app.route('/evidence')
 def get_evidence():
+    """
+    Retrieves content from a specified URL, signs it using the private key, and returns the signature as a hexadecimal string.
+    """
     endpoint = request.args.get('endpoint')
     base_url = request.url_root.rstrip('/')
 
@@ -48,6 +53,7 @@ def get_evidence():
         content = response.content
         print(type(content))
 
+        # Sign the content using the private key
         signature = PRIVATE_KEY.sign(
             content,
             padding.PSS(
