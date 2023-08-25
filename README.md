@@ -22,14 +22,28 @@ Need to check how the browser does it.
     1. There could be corner cases where the evidence is not truly correct, but the probability of that happening is very unlikely.
 
 ## To-Do List 
-- [ ] Create a static HTML page and fetch evidence that contains static
-  - [x] Images
-  - [ ] Videos
-  - [x] Audio
-- [x] Reconstruct a viewable evidence from the serialzed version
-- [ ] Save the `evidence/` as a compressed file
-- [ ] Server side stuff
+- [ ] Client side
+    - [x] Create a static HTML page and fetch evidence that contains static
+    - [x] Images
+    - [x] Videos
+    - [x] Audio
+    - [x] Reconstruct a viewable evidence from the serialzed version
+    - [ ] Save the `evidence/` as a compressed file (maybe later)
+    - [ ] robustify the custom script
+        - [ ] do the testing on various platforms
+        - [ ] do testing on iframe websites
+        - [ ] note down the limitations
+        - [x] make the regex more strong
+    - [ ] HAR
+        - [ ] viewable content extraction from har
+- [ ] Server side
     - [ ] sign `content` + `public_key`
     - [ ] Add custom headers to the server
     - [ ] create multliple servers with this property
 - [ ] Create a function to verify the signatures
+
+## Done (but not worked)
+- tried `wget` but didn't work
+    - beacuse of endless looping having several edge cases
+    - link replacing wont work as expected
+    - custom script wont work

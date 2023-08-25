@@ -7,11 +7,11 @@ from cryptography.hazmat.primitives.serialization import load_pem_public_key
 from cryptography.hazmat.backends import default_backend
  # verify the authenticity of a signature for given content using provided public key.
 def verify(signature_hex, content, public_key_pem):
-    
-    """ verify function takes a hexadecimal signature, content, and a PEM-encoded public key, 
-     and it attempts to verify the authenticity of the signature using the provided public key. 
-     If the verification is successful, it returns True; """
-    
+    """ 
+    verify function takes a hexadecimal signature, content, and a PEM-encoded public key, 
+    and it attempts to verify the authenticity of the signature using the provided public key. 
+    If the verification is successful, it returns True;
+    """
     try:
         public_key_obj = load_pem_public_key(public_key_pem, backend=default_backend())
         signature = bytes.fromhex(signature_hex)
