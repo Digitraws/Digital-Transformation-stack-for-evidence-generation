@@ -1,0 +1,22 @@
+version: "2"
+
+services:
+  # dev environment, after this just do the copy thing
+  nginx:
+    container_name: nginx-tut
+    build: ./njs_tut
+    volumes:
+      - ./njs_tut/nginx.conf:/etc/nginx/nginx.conf
+      - ./njs_tut/njs/:/etc/nginx/njs/
+    ports:
+      - 80:80
+    depends_on:
+      - flask
+
+  flask:
+    container_name: flask-dev
+    build: 
+      context: .
+      dockerfile: ./server/Dockerfile
+    ports:
+      - 5000:5000
