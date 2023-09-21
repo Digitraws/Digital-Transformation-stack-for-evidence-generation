@@ -1,10 +1,10 @@
-function addCustomHash(response) {
+function addCustomHash(r) {
 	var crypto = require("crypto");
 	var hash = crypto.createHash("sha256");
-	hash.update(response.body);
+	hash.update(r.responseBody);
 	var customHash = hash.digest("hex");
-	response.headersOut["Custom-Hash"] = customHash;
-	return response;
+	r.headersOut["X-Custom-Hash"] = customHash;
+	return r;
 }
 
 function doSign() {

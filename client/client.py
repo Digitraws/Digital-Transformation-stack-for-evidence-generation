@@ -8,6 +8,11 @@ from urllib.parse import urljoin
 import hashlib
 import mimetypes
 import re
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives.asymmetric import rsa, padding
+from cryptography.hazmat.primitives import serialization, hashes
+
+PUBLIC_KEY_PEM = b"-----BEGIN PUBLIC KEY-----\nMFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAMI9oNbX3h/A2nYg3+etgbI0Q2+507Wq\nEmGRjCnbGQG9FZZupjZLL5eq9VrA+gZkxQYJXDPNnvVwQRjZQfvGOUsCAwEAAQ==\n-----END PUBLIC KEY-----\n"
 
 
 class EvidenceMaker:
@@ -16,17 +21,55 @@ class EvidenceMaker:
         self.base_path = base_path
         self.save_dir = save_dir
 
+    @staticmethod
+    def verify(signature_hex, content, public_key_pem):
+        """
+        verify function takes a hexadecimal signature, content, and a PEM-encoded public key,
+        and it attempts to verify the authenticity of the signature using the provided public key.
+        If the verification is successful, it returns True;
+        """
+        try:
+            public_key_obj = serialization.load_pem_public_key(
+                public_key_pem, backend=default_backend()
+            )
+            signature = bytes.fromhex(signature_hex)
+            public_key_obj.verify(
+                signature,
+                content,
+                padding.PSS(
+                    mgf=padding.MGF1(hashes.SHA256()),
+                    salt_length=padding.PSS.MAX_LENGTH,
+                ),
+                hashes.SHA256(),
+            )
+            return True
+        except Exception:
+            raise Exception("Signature verification failed")
+            return False
+
+    @staticmethod
+    def verify_response(response):
+        signature = response.headers.get("X-Signature", None)
+        signature_timestamp = response.headers.get("X-Signature-timestamp", None)
+        if signature is None or signature_timestamp is None:
+            return None
+        content = str(signature_timestamp).encode() + response.content
+        return EvidenceMaker.verify(signature, content, PUBLIC_KEY_PEM)
+
+    def request_fetch(self, url):
+        if url in self.visited_urls:
+            return None
+        self.visited_urls.add(url)
+        response = requests.get(url)
+        self.verify_response(response)
+        return response
+
     def check_mime_app(self, url):
         """
         Checks if a given URL is a Application MIME.
         If it is then download it and return the file name.
         """
-        if url in self.visited_urls or url[:4] != "http":
-            return None
-
-        self.visited_urls.add(url)
-
-        response = requests.get(url)
+        response = self.request_fetch(url)
         content_type = response.headers.get("Content-Type", "")
 
         if not content_type.startswith("application"):
@@ -43,7 +86,6 @@ class EvidenceMaker:
         }
         with open(os.path.join(self.base_path, file_name), "w") as f:
             json.dump(data, f, indent=4)
-
         return file_name
 
     def fetch_linked_mime_apps(self, soup, url):
@@ -94,10 +136,7 @@ class EvidenceMaker:
         Fetches content from a given URL and its embedded resources, storing them in JSON format.
         Returns the file name of the saved JSON.
         """
-        if url in self.visited_urls:
-            return None
-        self.visited_urls.add(url)
-        response = requests.get(url)
+        response = self.request_fetch(url)
         content_type = response.headers.get("Content-Type", "")
 
         # generates a unique file name using the MD5 hash of the URL and data saved to a JSON file.
