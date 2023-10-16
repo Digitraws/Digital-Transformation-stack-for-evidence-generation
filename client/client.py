@@ -24,9 +24,30 @@ class EvidenceMaker:
     @staticmethod
     def verify(signature_hex, content, public_key_pem):
         """
-        verify function takes a hexadecimal signature, content, and a PEM-encoded public key,
-        and it attempts to verify the authenticity of the signature using the provided public key.
-        If the verification is successful, it returns True;
+        Verify the authenticity of a signature using a PEM-encoded public key.
+
+        Parameters
+        ----------
+        signature_hex : str
+            A hexadecimal signature to be verified.
+        content : bytes
+            The content that was signed.
+        public_key_pem : bytes
+            The PEM-encoded public key used for verification.
+
+        Returns
+        ----------
+        bool
+            True if the signature is valid; False otherwise.
+
+        Raises
+        ----------
+        Exception
+            If the signature verification fails.
+
+        Note
+        ----------
+        This method uses the SHA-256 hash algorithm and PSS padding for verification.
         """
         try:
             public_key_obj = serialization.load_pem_public_key(
@@ -60,7 +81,11 @@ class EvidenceMaker:
         if url in self.visited_urls:
             return None
         self.visited_urls.add(url)
-        response = requests.get(url)
+        try:
+            response = requests.get(url)
+        except Exception as e:
+            print(e)
+            return None
         self.verify_response(response)
         return response
 
@@ -70,6 +95,8 @@ class EvidenceMaker:
         If it is then download it and return the file name.
         """
         response = self.request_fetch(url)
+        if response is None:
+            return None
         content_type = response.headers.get("Content-Type", "")
 
         if not content_type.startswith("application"):
@@ -137,6 +164,8 @@ class EvidenceMaker:
         Returns the file name of the saved JSON.
         """
         response = self.request_fetch(url)
+        if response is None:
+            return None
         content_type = response.headers.get("Content-Type", "")
 
         # generates a unique file name using the MD5 hash of the URL and data saved to a JSON file.
@@ -272,14 +301,16 @@ def clear():
 
 
 def main():
-    clear()
+    # clear()
     # start_url = 'https://services.india.gov.in/service/detail/amma-vodi-application-registration-andhra-pradesh'
     # start_url = "http://localhost:5000/static/Gear-Twitter-Side-navigation-Expanded-Home-gb.jpg"
     # start_url = "https://ebird.org/home"
-    start_url = "http://localhost:5000"
-    evidence_maker = EvidenceMaker()
+    start_url = "http://localhost"
+    # start_url = "http://people.iiti.ac.in/~gourinath/"
+    # start_url = "https://iiti.ac.in"
+    evidence_maker = EvidenceMaker("local_evidence", "display_local_evidence")
     evidence_maker.make(start_url)
-    evidence_displayer = EvidenceDisplay()
+    evidence_displayer = EvidenceDisplay("local_evidence", "display_local_evidence")
     display_entry_file = evidence_displayer.display()
     print("file://" + display_entry_file)
 

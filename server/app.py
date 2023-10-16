@@ -93,10 +93,11 @@ def add_signature_header(response):
     signature = PRIVATE_KEY.sign(
         content,
         padding.PSS(
-            mgf=padding.MGF1(hashes.SHA256()), salt_length=padding.PSS.MAX_LENGTH
+            mgf=padding.MGF1(hashes.SHA256()), salt_length=0
         ),
         hashes.SHA256(),
     )
+    print(len(signature.hex()))
 
     response.headers["X-Signature-timestamp"] = timestamp
     response.headers["X-Signature"] = signature.hex()
