@@ -1,5 +1,3 @@
-var res_length = 0;
-var buf = 0;
 var res = "";
 var timestamp = null;
 var sign;
@@ -33,16 +31,12 @@ async function importPrivateKey(pem) {
 }
 
 async function set_sign(r, data, flags) {
-	ngx.log(1, "X-Signature");
-	ngx.log(1, r.headersOut["X-Signature-timestamp"]);
-
-	if (timestamp === null) {
-		timestamp = r.headersOut["X-Signature-timestamp"];
+	if (!timestamp) {
+		let datestring = r.variables.date_gmt.replace(/-/g, " ");
+		timestamp = new Date(datestring).getTime().toString();
 	}
 
 	if (data.length) {
-		buf++;
-		res_length += data.length;
 		res += data;
 	}
 
@@ -62,13 +56,11 @@ async function set_sign(r, data, flags) {
 
 			sign = Buffer.from(sign).toString("hex");
 			ngx.log(1, sign);
-			ngx.log(1, `FILTERED ${res_length} bytes in ${buf} buffers inside`);
 		} catch (e) {
 			ngx.log(ngx.ERR, `ERROR ${e}`);
 			r.sendBuffer("", flags);
 		}
 	}
-	// ngx.log(1, `FILTERED ${res_length} bytes in ${buf} buffers`);
 	r.sendBuffer(data, flags);
 }
 
@@ -77,10 +69,3 @@ function get_sign() {
 }
 
 export default { set_sign, get_sign };
-
-/**
- * TODO
- * 1. sign using the private key of SSL certificate
- * 2. can calculate the hash smartly instead of storing the entire response
- * 3. generate timestamp on the fly
- */
