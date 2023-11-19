@@ -8,7 +8,7 @@ load_dotenv()
 
 def main(path_to_file):
     pinata = PinataPy(os.environ["PINATA_API_KEY"], os.environ["PINATA_API_SECRET"])
-    res = pinata.pin_file_to_ipfs(path_to_file)
+    res = pinata.pin_file_to_ipfs(path_to_file,save_absolute_paths=False)
     uri = "https://gateway.pinata.cloud/ipfs/" + res["IpfsHash"]
 
     print("File Upload Successfull")

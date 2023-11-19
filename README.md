@@ -1,4 +1,11 @@
 # Digital Transformation stack for evidence generation
+In an era dominated by digital content, ensuring its integrity stands as a
+critical challenge. This project presents a pioneering solution, safeguarding digital
+content against tampering and ensuring its authenticity. By integrating cutting-edge
+technologies like cryptographic signatures and blockchain, DigiTraWS fortifies the
+trustworthiness of served content. This system not only offers an immutable audit trail
+but also fosters confidence and reliability in digital interactions, paving the way for a
+more accountable and secure digital landscape.
 
 ## UML
 ![img](flow.svg)
@@ -20,30 +27,3 @@ Need to check how the browser does it.
 1. For our evidence to be robust enough, we must store at least the properties (content+timestamp+URL/link (HTTP response), signature).
 2. The timestamps of all the objects in a particular evidence must be within a certain timeframe (T secs).
     1. There could be corner cases where the evidence is not truly correct, but the probability of that happening is very unlikely.
-
-## To-Do List 
-- [ ] Client side
-    - [x] Create a static HTML page and fetch evidence that contains static
-    - [x] Images
-    - [x] Videos
-    - [x] Audio
-    - [x] Reconstruct a viewable evidence from the serialzed version
-    - [ ] Save the `evidence/` as a compressed file (maybe later)
-    - [ ] robustify the custom script
-        - [ ] do the testing on various platforms
-        - [ ] do testing on iframe websites
-        - [ ] note down the limitations
-        - [x] make the regex more strong
-    - [ ] HAR
-        - [ ] viewable content extraction from har
-- [ ] Server side
-    - [ ] sign `content` + `public_key`
-    - [ ] Add custom headers to the server
-    - [ ] create multliple servers with this property
-- [ ] Create a function to verify the signatures
-
-## Done (but not worked)
-- tried `wget` but didn't work
-    - beacuse of endless looping having several edge cases
-    - link replacing wont work as expected
-    - custom script wont work
