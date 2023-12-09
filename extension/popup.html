@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.5" />
+		<title>exts</title>
+		<style>
+			body {
+				font-family: "Arial", sans-serif;
+				height: 300px; /* Adjust the height as needed */
+				padding: 500px;
+				text-align: center;
+				padding: 10px;
+			}
+
+			input {
+				padding: 15px;
+				margin: 10px;
+				border: 1px solid #ddd;
+				border-radius: 8px;
+				box-sizing: border-box;
+			}
+
+			button {
+				background-color: #4caf50;
+				color: white;
+				padding: 15px 20px;
+				font-size: 18px;
+				cursor: pointer;
+				border: none;
+				border-radius: 8px;
+			}
+
+			button:hover {
+				background-color: #45a049;
+			}
+
+			#loader {
+				border: 8px solid #f3f3f3;
+				border-top: 8px solid #3498db;
+				border-radius: 50%;
+				width: 30px;
+				height: 30px;
+				animation: spin 1s linear infinite;
+				margin: auto;
+				margin-top: 20px;
+				display: none;
+			}
+
+			@keyframes spin {
+				0% {
+					transform: rotate(0deg);
+				}
+				100% {
+					transform: rotate(360deg);
+				}
+			}
+
+			#result {
+				margin-top: 20px;
+				margin-bottom: 0px;
+				font-size: 18px;
+				color: rgb(97, 97, 179);
+			}
+		</style>
+	</head>
+	<body>
+		<input
+			type="text"
+			id="url"
+			placeholder="Enter URL"
+			value="https://example.com"
+		/>
+		<br />
+		<input
+			type="text"
+			id="filepath"
+			placeholder="Enter filepath"
+			value="/home/gj/Downloads/test_digitraws/test1"
+		/>
+		<br />
+		<button id="runCommand">Run Command</button>
+		<div id="loader"></div>
+		<div id="result"></div>
+		<script defer src="popup.js"></script>
+	</body>
+</html>
