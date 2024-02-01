@@ -1,31 +1,80 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<title>Twitter App - Index Page</title>
-	</head>
-	<body>
-		<h1>Welcome to the Twitter App</h1>
-		<p>This is the index page of the Flask application.</p>
-		<p>
-			You can interact with the app by making HTTP requests to specific routes.
-		</p>
-        <img src="static/Twitter-new-design.png" height="300"></img>
-        <img src="https://media.wired.com/photos/5d2c0feed25a5400091dfabb/master/w_1600,c_limit/Gear-Twitter-Side-navigation-Expanded-Home-gb.jpg" height="300"></img>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitter App - Index Page</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 40px;
+            text-align: center;
+        }
 
-        <p>The Audio</p>
-        <audio controls>
-            <source src="https://cdn.pixabay.com/download/audio/2023/02/28/audio_52ccaf1a85.mp3" type="audio/mpeg">
-          Your browser does not support the audio element.
-        </audio>
+        h1 {
+            color: #1DA1F2;
+        }
 
-        <p>The Video</p>
-        <video controls height="300">
-            <source src="static/video.mp4" type="video/mp4">
-            Your browser does not support the video element.
-        </video>
-        <hr>
-        <p>Check out the <a href="static/Revised_2023-24_Academic_Calendar - 05-07-2023.pdf">academic calendar</a></p>
-        <hr>
-        <p>The Class <a href="static/2023 Autumn Semester Class Timetable.xlsx">Timetable</a></p>
-    </body>
+        p {
+            color: #333;
+            line-height: 1.5;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        audio,
+        video {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        hr {
+            border: 1px solid #ddd;
+            margin: 40px 0;
+        }
+
+        a {
+            color: #1DA1F2;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Twitter App</h1>
+    <p>This is the index page of the Flask application.</p>
+    <p>You can interact with the app by making HTTP requests to specific routes.</p>
+
+    <img src="static/Twitter-new-design.png" alt="Twitter Design">
+    <img src="https://media.wired.com/photos/5d2c0feed25a5400091dfabb/master/w_1600,c_limit/Gear-Twitter-Side-navigation-Expanded-Home-gb.jpg" alt="Twitter Expanded Home">
+
+    <p>The Audio</p>
+    <audio controls>
+        <source src="https://cdn.pixabay.com/download/audio/2023/02/28/audio_52ccaf1a85.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <p>The Video</p>
+    <video controls height="300">
+        <source src="static/video.mp4" type="video/mp4">
+        Your browser does not support the video element.
+    </video>
+
+    <hr>
+
+    <p>Check out the <a href="static/Revised_2023-24_Academic_Calendar - 05-07-2023.pdf">academic calendar</a></p>
+
+    <hr>
+
+    <p>The Class <a href="static/2023 Autumn Semester Class Timetable.xlsx">Timetable</a></p>
+</body>
 </html>
+

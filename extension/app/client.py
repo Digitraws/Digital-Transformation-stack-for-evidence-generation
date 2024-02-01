@@ -85,7 +85,7 @@ class EvidenceMaker:
         except Exception as e:
             print(e)
             return None
-        self.verify_response(response)
+        # self.verify_response(response)
         return response
 
     def check_mime_app(self, url):

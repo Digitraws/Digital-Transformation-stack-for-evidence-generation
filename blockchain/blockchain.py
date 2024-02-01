@@ -24,6 +24,6 @@ def main(path_to_file):
     print("Transaction response: ", res)
 
 
-evidence_path = os.path.abspath("../client/evidence.zip")
+evidence_path = os.path.abspath("/home/gj/test_digitraws/evidence.zip")
 
 main(evidence_path)

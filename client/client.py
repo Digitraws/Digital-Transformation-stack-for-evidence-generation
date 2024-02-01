@@ -81,11 +81,11 @@ class EvidenceMaker:
             return None
         self.visited_urls.add(url)
         try:
-            response = requests.get(url)
+            response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"})
         except Exception as e:
             print(e)
             return None
-        self.verify_response(response)
+        # self.verify_response(response)
         return response
 
     def check_mime_app(self, url):
@@ -301,9 +301,14 @@ def clear():
 
 def main():
     clear()
-    start_url = "https://iiti.ac.in"
-    evidence_maker = EvidenceMaker("evidence")
+    # start_url = "https://iiti.ac.in"
+    # start_url = "https://webfront.payu.in/webfront/#/receipt/5e573ebaa652a8a5ac37676d97f42c50"
+    # start_url = "https://www.cricbuzz.com/"
+    start_url = "http://localhost"
+    evidence_maker = EvidenceMaker("/home/gj/test_digitraws/evidence")
     evidence_maker.make(start_url)
+    display = EvidenceDisplay("/home/gj/test_digitraws/evidence", "/home/gj/test_digitraws/display")
+    print(display.display())
 
 
 if __name__ == "__main__":

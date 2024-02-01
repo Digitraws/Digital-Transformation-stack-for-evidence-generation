@@ -1,7 +1,7 @@
 {
 	"name": "digitraws",
 	"description": "Example host for native messaging",
-	"path": "/home/gj/proj/Digital-Transformation-stack-for-evidence-generation/borderify/app/digitraws.py",
+	"path": "/home/gj/proj/Digital-Transformation-stack-for-evidence-generation/extension/app/digitraws.py",
 	"type": "stdio",
 	"allowed_extensions": ["digitraws@example.org"]
 }
